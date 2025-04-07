@@ -3,7 +3,6 @@ import environ
 from pathlib import Path
 import dj_database_url
 
-
 # Setup base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,7 +32,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Enable static file serving in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -42,13 +41,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# REST Framework (adjust as needed)
+# REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
 }
 
-# URLs and WSGI
+# URL and WSGI
 ROOT_URLCONF = 'blog_platform.urls'
 WSGI_APPLICATION = 'blog_platform.wsgi.application'
 
@@ -69,42 +68,34 @@ TEMPLATES = [
     },
 ]
 
-# Database (uses PostgreSQL via environment)
-DATABASES = {
-    'default': {
-        'default': dj_database_url.config(conn_max_age=600),
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='mydb'),
-        'USER': env('DB_USER', default='myuser'),
-        'PASSWORD': env('DB_PASSWORD', default='mypassword'),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='5432'),
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+# Database (use PostgreSQL if DATABASE_URL is provided, else fallback to SQLite)
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
         conn_max_age=600
     )
 }
 
-# Static files (for production)
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-ALLOWED_HOSTS =['*']
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Where you store custom CSS, JS
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   # Where collectstatic will copy files
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
