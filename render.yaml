@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: blog-platform
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn blog_platform.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: blog_platform.settings
+      - key: DATABASE_URL
+        fromDatabase:
+          name: blog-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+    staticPublishPath: staticfiles
+
+databases:
+  - name: blog-db
+    plan: free
