@@ -1,0 +1,90 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+button {
+    background: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 5px solid #007bff;
+    border-radius: 8px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.post-card:hover {
+    background: #eef5ff;
+    transform: scale(1.01);
+}
+
+.post-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.meta {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 10px;
+}
